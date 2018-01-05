@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,6 +9,7 @@ using TeduCoreApp.Infrastructure.ShareKernel;
 
 namespace TeduCoreApp.Data.Entities
 {
+    [Table("Procduct")]
     public class Product : DomainEntity<int>, IHasSeoMetaData, ISwitchable, IDateTracking
     {
 
@@ -43,6 +45,8 @@ namespace TeduCoreApp.Data.Entities
         //link Foreign key
         [ForeignKey("CategoryId")]
         public virtual ProductCategory ProductCategory { get; set; }
+
+        public ICollection<ProductColor> ProductColors { get; set; }
 
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }

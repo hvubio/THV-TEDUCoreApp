@@ -5,15 +5,14 @@ using TeduCoreApp.Infrastructure.ShareKernel;
 
 namespace TeduCoreApp.Data.Entities
 {
-    [Table("Menu")]
-    public class Menu : DomainEntity<int>, ISortable, ISwitchable
+    [Table("Page")]
+    public class Page: DomainEntity<int>, ISwitchable
     {
         public string Name { get; set; }
-        public string Url { get; set; }
-        public string Css { get; set; }
-        public int ParentId { get; set; }
+        public string Alias { get; set; }
 
-        public int SortOrder { get; set; }
+        public string Content { get; set; }
+
         public Status Status { get; set; }
     }
 }

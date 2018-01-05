@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using TeduCoreApp.Data.Enums;
 using TeduCoreApp.Data.Interfaces;
 using TeduCoreApp.Infrastructure.ShareKernel;
 
 namespace TeduCoreApp.Data.Entities
 {
+    [Table("ProductCategory")]
     public class ProductCategory : DomainEntity<int>, IHasSeoMetaData, ISwitchable, ISortable, IDateTracking
     {
         public ProductCategory()
@@ -30,7 +32,7 @@ namespace TeduCoreApp.Data.Entities
         public bool HomeFlag { get; set; }
 
         // link key product
-        public virtual ICollection<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; }
 
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
