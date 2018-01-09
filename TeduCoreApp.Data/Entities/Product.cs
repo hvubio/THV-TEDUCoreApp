@@ -12,28 +12,20 @@ namespace TeduCoreApp.Data.Entities
     [Table("Procduct")]
     public class Product : DomainEntity<int>, IHasSeoMetaData, ISwitchable, IDateTracking
     {
-
-        [StringLength(255)]
-        [Required]
-        public string Name { get; set; }
+        [StringLength(255)] [Required] public string Name { get; set; }
 
         public int CategoryId { get; set; }
 
-        [StringLength(255)]
-        [Required]
-        public string Image { get; set; }
+        [StringLength(255)] [Required] public string Image { get; set; }
 
-        [Required]
-        [DefaultValue(0)]
-        public decimal Price { get; set; }
+        [Required] [DefaultValue(0)] public decimal Price { get; set; }
+
         public decimal? PromotionPrice { get; set; }
         public decimal? OriginalPrice { get; set; }
 
-        [StringLength(255)]
-        public string Description { get; set; }
+        [StringLength(255)] public string Description { get; set; }
 
-        [Required]
-        public string Content { get; set; }
+        [Required] public string Content { get; set; }
 
         public bool? HomeFlag { get; set; }
         public bool NewFlag { get; set; }
@@ -43,8 +35,7 @@ namespace TeduCoreApp.Data.Entities
         public string Unit { get; set; }
 
         //link Foreign key
-        [ForeignKey("CategoryId")]
-        public virtual ProductCategory ProductCategory { get; set; }
+        [ForeignKey("CategoryId")] public virtual ProductCategory ProductCategory { get; set; }
 
         public ICollection<ProductColor> ProductColors { get; set; }
 

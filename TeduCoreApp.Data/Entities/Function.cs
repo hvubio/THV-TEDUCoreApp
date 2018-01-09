@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using TeduCoreApp.Data.Enums;
 using TeduCoreApp.Data.Interfaces;
 using TeduCoreApp.Infrastructure.ShareKernel;
@@ -9,13 +7,29 @@ using TeduCoreApp.Infrastructure.ShareKernel;
 namespace TeduCoreApp.Data.Entities
 {
     [Table("Function")]
-    public class Function: DomainEntity<int>, ISwitchable,ISortable
+    public class Function : DomainEntity<int>, ISwitchable, ISortable
     {
-        public string Name { get; set; }
-        public string Url { get; set; }
+        public Function()
+        {
+        }
+
+        public Function(string name, string url, string iconCss, Status status, int sortOrder)
+        {
+            Name = name;
+            Url = url;
+            IconCss = iconCss;
+            Status = status;
+            SortOrder = sortOrder;
+        }
+
+
+        [Required] [StringLength(128)] public string Name { get; set; }
+
+        [StringLength(256)] public string Url { get; set; }
+
         public string IconCss { get; set; }
+        public int SortOrder { get; set; }
 
         public Status Status { get; set; }
-        public int SortOrder { get; set; }
     }
 }
