@@ -6,8 +6,8 @@ using TeduCoreApp.Infrastructure.ShareKernel;
 
 namespace TeduCoreApp.Data.Entities
 {
-    [Table("Slides")]
-    public class Slides : DomainEntity<int>, ISwitchable, ISortable
+    [Table("Slide")]
+    public class Slide : DomainEntity<int>, ISwitchable, ISortable
     {
         public string Name { get; set; }
         public string Content { get; set; }

@@ -7,7 +7,7 @@ using TeduCoreApp.Infrastructure.ShareKernel;
 namespace TeduCoreApp.Data.Entities
 {
     [Table("Function")]
-    public class Function : DomainEntity<int>, ISwitchable, ISortable
+    public class Function : DomainEntity<string>, ISwitchable, ISortable
     {
         public Function()
         {

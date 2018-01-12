@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TeduCoreApp.Infrastructure.ShareKernel
+﻿namespace TeduCoreApp.Infrastructure.ShareKernel
 {
     public abstract class DomainEntity<T>
     {
         public T Id { get; set; }
 
-        ///<summary>
-        /// True if domain entity has an identity
+        /// <summary>
+        ///     True if domain entity has an identity
         /// </summary>
         public bool IsTransient()
         {

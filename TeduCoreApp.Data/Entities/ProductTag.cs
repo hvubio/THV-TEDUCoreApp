@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TeduCoreApp.Infrastructure.ShareKernel;
 
 namespace TeduCoreApp.Data.Entities
 {
     [Table("ProductTag")]
-    public class ProductTag
+    public class ProductTag: DomainEntity<string>
     {
         public int ProductId { get; set; }
         [Required] [StringLength(50)]

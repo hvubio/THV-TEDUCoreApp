@@ -32,7 +32,7 @@ namespace TeduCoreApp.Data.Entities
         public bool HomeFlag { get; set; }
 
         // link key product
-        public ICollection<Product> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
 
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }

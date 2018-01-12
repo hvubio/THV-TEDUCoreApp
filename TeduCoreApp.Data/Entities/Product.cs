@@ -14,7 +14,7 @@ namespace TeduCoreApp.Data.Entities
     {
         [StringLength(255)] [Required] public string Name { get; set; }
 
-        public int CategoryId { get; set; }
+        
 
         [StringLength(255)] [Required] public string Image { get; set; }
 
@@ -31,8 +31,10 @@ namespace TeduCoreApp.Data.Entities
         public bool NewFlag { get; set; }
         public bool HotFlag { get; set; }
         public int? ViewCount { get; set; }
+        
         public string Tag { get; set; }
         public string Unit { get; set; }
+        public int CategoryId { get; set; }
 
         //link Foreign key
         [ForeignKey("CategoryId")] public virtual ProductCategory ProductCategory { get; set; }

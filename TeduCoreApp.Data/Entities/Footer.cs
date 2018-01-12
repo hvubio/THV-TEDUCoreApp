@@ -5,7 +5,7 @@ using TeduCoreApp.Infrastructure.ShareKernel;
 namespace TeduCoreApp.Data.Entities
 {
     [Table("Footer")]
-    public class Footer : DomainEntity<int>
+    public class Footer : DomainEntity<string>
     {
         [Required] public string Content { get; set; }
     }
