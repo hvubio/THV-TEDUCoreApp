@@ -6,14 +6,14 @@ using TeduCoreApp.Infrastructure.ShareKernel;
 namespace TeduCoreApp.Data.Entities
 {
     [Table("AdvertisementPosition")]
-    public class AdvertisementPosition : DomainEntity<int>
+    public class AdvertistmentPosition : DomainEntity<string>
     {
         [StringLength(250)] public string Name { get; set; }
 
         public int PageId { get; set; }
 
-        [ForeignKey("PageId")] public virtual AdvertisementPage AdvertisementPage { get; set; }
+        [ForeignKey("PageId")] public virtual AdvertistmentPage AdvertisementPage { get; set; }
 
-        public virtual ICollection<Advertisement> Advertisements { get; set; }
+        public virtual ICollection<Advertistment> Advertisements { get; set; }
     }
 }

@@ -27,6 +27,8 @@ namespace TeduCoreApp.Data.Entities
 
         [StringLength(256)] public string Url { get; set; }
 
+        [StringLength(128)] public string ParentId { get; set; }
+
         public string IconCss { get; set; }
         public int SortOrder { get; set; }
 

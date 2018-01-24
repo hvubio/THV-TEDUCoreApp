@@ -6,10 +6,10 @@ using TeduCoreApp.Infrastructure.ShareKernel;
 namespace TeduCoreApp.Data.Entities
 {
     [Table("AdvertisementPage")]
-    public class AdvertisementPage : DomainEntity<int>
+    public class AdvertistmentPage : DomainEntity<string>
     {
         [StringLength(250)] public string Name { get; set; }
 
-        public virtual ICollection<AdvertisementPosition> AdvertisementPositions { get; set; }
+        public virtual ICollection<AdvertistmentPosition> AdvertistmentPositions { get; set; }
     }
 }

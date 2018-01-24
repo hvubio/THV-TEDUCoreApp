@@ -72,7 +72,7 @@ namespace TeduCoreApp.Data.EF
 
         public void Remove(K id)
         {
-            _context.Set<T>().Remove(FindById(id));
+            _context.Remove(FindById(id));
         }
 
         public void RemoveMultiple(List<T> entityList)

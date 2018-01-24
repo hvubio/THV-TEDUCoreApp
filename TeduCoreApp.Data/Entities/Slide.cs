@@ -7,7 +7,7 @@ using TeduCoreApp.Infrastructure.ShareKernel;
 namespace TeduCoreApp.Data.Entities
 {
     [Table("Slide")]
-    public class Slide : DomainEntity<int>, ISwitchable, ISortable
+    public class Slide : DomainEntity<int>
     {
         public string Name { get; set; }
         public string Content { get; set; }
@@ -17,8 +17,8 @@ namespace TeduCoreApp.Data.Entities
 
         [Required] [StringLength(250)] public string GroupAlias { get; set; }
 
-        public int SortOrder { get; set; }
+        public int DisplayOrder { get; set; }
 
-        public Status Status { get; set; }
+        public bool Status { get; set; }
     }
 }

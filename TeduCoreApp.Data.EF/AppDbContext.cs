@@ -20,9 +20,9 @@ namespace TeduCoreApp.Data.EF
 
         #region DbSet
 
-        public DbSet<Advertisement> Advertisements { get; set; }
-        public DbSet<AdvertisementPage> AdvertisementPages { get; set; }
-        public DbSet<AdvertisementPosition> AdvertisementPositions { get; set; }
+        public DbSet<Advertistment> Advertistments { get; set; }
+        public DbSet<AdvertistmentPage> AdvertistmentPages { get; set; }
+        public DbSet<AdvertistmentPosition> AdvertistmentPositions { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<AnnouncementUser> AnnouncementUsers { get; set; }
         public DbSet<AppRole> AppRoles { get; set; }

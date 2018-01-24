@@ -8,7 +8,7 @@ using TeduCoreApp.Infrastructure.ShareKernel;
 namespace TeduCoreApp.Data.Entities
 {
     [Table("Advertisement")]
-    public class Advertisement : DomainEntity<int>, ISwitchable, IDateTracking
+    public class Advertistment : DomainEntity<int>, ISwitchable, IDateTracking
     {
         [StringLength(250)] public string Name { get; set; }
         [StringLength(250)] public string Description { get; set; }
@@ -16,7 +16,7 @@ namespace TeduCoreApp.Data.Entities
         [StringLength(250)] public string Image { get; set; }
         [StringLength(250)] public string Url { get; set; }
 
-        [ForeignKey("PositionId")] public virtual AdvertisementPosition AdvertisementPositions { get; set; }
+        [ForeignKey("PositionId")] public virtual AdvertistmentPosition AdvertisementPositions { get; set; }
 
 
         public Status Status { get; set; }
