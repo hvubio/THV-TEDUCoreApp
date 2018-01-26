@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TeduCoreApp.Application.Implementation;
+using TeduCoreApp.Application.Interfaces;
 using TeduCoreApp.Data.EF;
 using TeduCoreApp.Data.Entities;
+using TeduCoreApp.Data.IRepositories;
 using TeduCoreApp.Services;
 
 namespace TeduCoreApp
@@ -32,6 +36,16 @@ namespace TeduCoreApp
             // Add application services.
             services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
+
+            // add config automapper
+            services.AddSingleton(Mapper.Configuration);
+            services.AddScoped<Mapper>(sp =>
+                new Mapper(sp.GetRequiredService<AutoMapper.IConfigurationProvider>(), sp.GetService));
+
+            // add services entites
+
+            services.AddScoped<IProductCategoryRepository, IProductCategoryRepository>();
+            services.AddScoped<IProductCategoryService, ProductCategoryService>();
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<DbInitializer>();

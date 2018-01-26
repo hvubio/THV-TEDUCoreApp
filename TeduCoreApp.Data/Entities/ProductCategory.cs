@@ -16,6 +16,23 @@ namespace TeduCoreApp.Data.Entities
             Products = new List<Product>(); // make this for Product not null
         }
 
+        public ProductCategory(string name, string description, int? parentId, int? homeOrder, string image, bool homeFlag, string seoPageTitle, string seoAlias, string seoKeywords, string seoDescription, int sortOrder, Status status)
+        {
+            Name = name;
+            Description = description;
+            ParentId = parentId;
+            HomeOrder = homeOrder;
+            Image = image;
+            HomeFlag = homeFlag;
+            SeoPageTitle = seoPageTitle;
+            SeoAlias = seoAlias;
+            SeoKeywords = seoKeywords;
+            SeoDescription = seoDescription;
+            SortOrder = sortOrder;
+            Status = status;
+        }
+
+
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
