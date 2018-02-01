@@ -12,7 +12,7 @@ namespace TeduCoreApp.Data.Entities
     {
         [StringLength(250)] public string Name { get; set; }
         [StringLength(250)] public string Description { get; set; }
-        [StringLength(20)] public int PositionId { get; set; }
+        [StringLength(20)] public string PositionId { get; set; }
         [StringLength(250)] public string Image { get; set; }
         [StringLength(250)] public string Url { get; set; }
 

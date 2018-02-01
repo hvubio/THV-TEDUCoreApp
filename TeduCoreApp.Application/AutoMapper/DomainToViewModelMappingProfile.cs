@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using TeduCoreApp.Application.ViewModels.Product;
 using TeduCoreApp.Data.Entities;
 

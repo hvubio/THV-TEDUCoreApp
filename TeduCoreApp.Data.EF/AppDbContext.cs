@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Security.Cryptography;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
+using System.Linq;
 using TeduCoreApp.Data.EF.Configurations;
 using TeduCoreApp.Data.EF.Extentions;
 using TeduCoreApp.Data.Entities;
@@ -60,23 +61,24 @@ namespace TeduCoreApp.Data.EF
         {
             #region Identity config
 
-            builder.Entity<IdentityUserClaim<string>>().ToTable("AppUserClaim").HasKey(c => c.Id);
-            builder.Entity<IdentityRoleClaim<string>>().ToTable("AppRoleClaim").HasKey(c => c.Id);
-            builder.Entity<IdentityUserLogin<string>>().ToTable("AppUserLogin").HasKey(c => c.UserId);
-            builder.Entity<IdentityUserRole<string>>().ToTable("AppUserRole").HasKey(c => new {c.RoleId, c.UserId});
-            builder.Entity<IdentityUserToken<string>>().ToTable("AppUserToken").HasKey(c => new {c.UserId});
+            builder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaim").HasKey(c => c.Id);
+            builder.Entity<IdentityRoleClaim<Guid>>().ToTable("AppRoleClaim").HasKey(c => c.Id);
+            builder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogin").HasKey(c => c.UserId);
+            builder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRole").HasKey(c => new {c.RoleId, c.UserId});
+            builder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserToken").HasKey(c => new {c.UserId});
 
             #endregion
 
             builder.AddConfiguration(new AdvertisementPositionConfiguration());
             builder.AddConfiguration(new ContactDetailsConfiguration());
             builder.AddConfiguration(new FooterConfiguration());
+            builder.AddConfiguration(new FunctionConfiguration());
             builder.AddConfiguration(new PageConfiguration());
             builder.AddConfiguration(new ProductTagConfiguration());
             builder.AddConfiguration(new SystemConfigConfiguration());
             builder.AddConfiguration(new TagConfiguration());
 
-            base.OnModelCreating(builder);
+            //base.OnModelCreating(builder);
         }
 
         public override int SaveChanges()
@@ -94,6 +96,20 @@ namespace TeduCoreApp.Data.EF
 
             }
             return base.SaveChanges();
+        }
+
+        public class DesignTimeDbContextFactory: IDesignTimeDbContextFactory<AppDbContext>
+        {
+            public AppDbContext CreateDbContext(string[] args)
+            {
+                IConfiguration configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json").Build();
+                var builder = new DbContextOptionsBuilder<AppDbContext>();
+                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                builder.UseSqlServer(connectionString);
+                return new AppDbContext(builder.Options);
+            }
         }
     }
 }

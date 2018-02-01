@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TeduCoreApp.Data.EF;
 
 namespace TeduCoreApp
 {
@@ -14,7 +16,22 @@ namespace TeduCoreApp
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            var host = BuildWebHost(args);
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var dbInitializer = services.GetService<DbInitializer>();
+                    dbInitializer.Seed().Wait();
+                }
+                catch (Exception e)
+                {
+                    var logger = services.GetService<ILogger>();
+                    logger.LogError(e," An error occured while seeding the database");
+                }
+            }
+            host.Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

@@ -19,7 +19,8 @@ namespace TeduCoreApp.Data.Entities
         [Required] [StringLength(250)] public string Tilte { get; set; }
 
         public string Content { get; set; }
-        [StringLength(450)] public int UserId { get; set; }
+
+        public Guid UserId { get; set; }
 
         [ForeignKey("UserId")] public virtual AppUser AppUser { get; set; }
 

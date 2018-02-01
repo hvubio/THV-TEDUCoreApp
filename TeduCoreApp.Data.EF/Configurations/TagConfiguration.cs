@@ -12,7 +12,7 @@ namespace TeduCoreApp.Data.EF.Configurations
     {
         public override void Configuration(EntityTypeBuilder<Tag> entity)
         {
-            entity.Property(c => c.Id).HasMaxLength(50).IsRequired(true).HasColumnType("varchar");
+            entity.Property(c => c.Id).IsRequired(true).HasColumnType("varchar(50)");
         }
     }
 }

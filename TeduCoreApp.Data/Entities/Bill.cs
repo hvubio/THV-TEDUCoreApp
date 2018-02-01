@@ -16,12 +16,12 @@ namespace TeduCoreApp.Data.Entities
         {
         }
 
-        public Bill(string customerName, string csCustomerAddress, string customerMobile, string customerMessage,
+        public Bill(string customerName, string customerAddress, string customerMobile, string customerMessage,
             PaymentMethod paymentMethod,
-            BillStatus billStatus, Status status, string customerId)
+            BillStatus billStatus, Status status, Guid customerId)
         {
             CustomerName = customerName;
-            CsCustomerAddress = csCustomerAddress;
+            CustomerAddress = customerAddress;
             CustomerMobile = customerMobile;
             CustomerMessage = customerMessage;
             PaymentMethod = paymentMethod;
@@ -30,13 +30,13 @@ namespace TeduCoreApp.Data.Entities
             CustomerId = customerId;
         }
 
-        public Bill(int id, string customerName, string csCustomerAddress, string customerMobile,
+        public Bill(int id, string customerName, string customerAddress, string customerMobile,
             string customerMessage, PaymentMethod paymentMethod,
-            BillStatus billStatus, Status status, string customerId)
+            BillStatus billStatus, Status status, Guid customerId)
         {
             Id = id;
             CustomerName = customerName;
-            CsCustomerAddress = csCustomerAddress;
+            CustomerAddress = customerAddress;
             CustomerMobile = customerMobile;
             CustomerMessage = customerMessage;
             PaymentMethod = paymentMethod;
@@ -47,8 +47,7 @@ namespace TeduCoreApp.Data.Entities
 
 
         [Required] [StringLength(256)] public string CustomerName { get; set; }
-
-        public string CsCustomerAddress { get; }
+       
         [Required] [StringLength(50)] public string CustomerMobile { get; set; }
 
         [StringLength(256)] public string CustomerAddress { get; set; }
@@ -59,9 +58,9 @@ namespace TeduCoreApp.Data.Entities
 
         public BillStatus BillStatus { get; set; }
 
-        [StringLength(450)] public string CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
 
-        [ForeignKey("CustomerID")] public virtual AppUser AppUser { get; set; }
+        [ForeignKey("CustomerId")] public virtual AppUser AppUser { get; set; }
 
 
         public ICollection<BillDetail> BillDetails { get; set; }

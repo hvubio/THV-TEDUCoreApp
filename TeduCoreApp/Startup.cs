@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -8,9 +9,11 @@ using Microsoft.Extensions.DependencyInjection;
 using TeduCoreApp.Application.Implementation;
 using TeduCoreApp.Application.Interfaces;
 using TeduCoreApp.Data.EF;
+using TeduCoreApp.Data.EF.Repositories;
 using TeduCoreApp.Data.Entities;
 using TeduCoreApp.Data.IRepositories;
 using TeduCoreApp.Services;
+using IConfigurationProvider = AutoMapper.IConfigurationProvider;
 
 namespace TeduCoreApp
 {
@@ -27,24 +30,48 @@ namespace TeduCoreApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),o=>o.MigrationsAssembly("TeduCoreApp.Data.EF")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                    o => o.MigrationsAssembly("TeduCoreApp.Data.EF")));
 
             services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
+            // Configure Identity
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+
+                // Lockout settings
+
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+
+                // User settings
+
+                options.User.RequireUniqueEmail = true;
+            });
+
+            services.AddAutoMapper();
             // Add application services.
             services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddScoped<RoleManager<AppRole>, RoleManager<AppRole>>();
 
             // add config automapper
             services.AddSingleton(Mapper.Configuration);
-            services.AddScoped<Mapper>(sp =>
-                new Mapper(sp.GetRequiredService<AutoMapper.IConfigurationProvider>(), sp.GetService));
+            services.AddScoped(sp =>
+                new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
 
             // add services entites
 
-            services.AddScoped<IProductCategoryRepository, IProductCategoryRepository>();
+            services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
 
             services.AddTransient<IEmailSender, EmailSender>();
@@ -54,7 +81,7 @@ namespace TeduCoreApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, DbInitializer dbInitializer)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -77,7 +104,6 @@ namespace TeduCoreApp
                     "default",
                     "{controller=Home}/{action=Index}/{id?}");
             });
-            dbInitializer.Seed().Wait();
         }
     }
 }

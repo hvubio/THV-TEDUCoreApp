@@ -10,7 +10,7 @@ namespace TeduCoreApp.Data.Entities
     {
         [StringLength(250)] public string Name { get; set; }
 
-        public int PageId { get; set; }
+        public string PageId { get; set; }
 
         [ForeignKey("PageId")] public virtual AdvertistmentPage AdvertisementPage { get; set; }
 

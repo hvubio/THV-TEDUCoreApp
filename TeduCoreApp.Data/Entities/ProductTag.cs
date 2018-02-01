@@ -8,7 +8,7 @@ namespace TeduCoreApp.Data.Entities
     public class ProductTag: DomainEntity<string>
     {
         public int ProductId { get; set; }
-        [Required] [StringLength(50)]
+        [Required] [Column(TypeName = "varchar(50)")]
         public string TagId { get; set; }
 
         [ForeignKey("ProductId")]
