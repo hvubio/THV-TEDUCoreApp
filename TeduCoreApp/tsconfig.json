@@ -1,0 +1,8 @@
+﻿{
+  "compilerOptions": {
+    "allowJs": true,
+    "noEmit": true
+  },
+  "exclude": [ "wwwroot/lib" ] //ignore lib folders, we will get IntelliSense via ATA
+
+}

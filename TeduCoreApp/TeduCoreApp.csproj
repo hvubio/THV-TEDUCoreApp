@@ -31,6 +31,12 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="wwwroot\lib\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\js\site.min.js" />
   </ItemGroup>
 
 </Project>
