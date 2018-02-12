@@ -1,3 +1,9 @@
 {
-  "directory": "wwwroot/lib"
+  "directory": "wwwroot/lib",
+  "ignoredDependencies": [
+    "bootstrap",
+    "jquery",
+    "moment"
+
+  ]
 }
