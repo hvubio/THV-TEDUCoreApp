@@ -35,6 +35,7 @@
             <div class="animate form login_form">
                 <section class="login_content">
                     <form>
+                        @Html.AntiForgeryToken()
                         <h1>Đăng nhập</h1>
                         <div>
                             <input type="text" class="form-control" name="username" placeholder="Tên đăng nhập" id="txtUserName" required="" />
@@ -65,15 +66,16 @@
             <div id="register" class="animate form registration_form">
                 <section class="login_content">
                     <form>
+                        
                         <h1>Create Account</h1>
                         <div>
-                            <input type="text" class="form-control" placeholder="Username" required="" />
+                            <input type="text" class="form-control" placeholder="Username" required=""/>
                         </div>
                         <div>
-                            <input type="email" class="form-control" placeholder="Email" required="" />
+                            <input type="email" class="form-control" placeholder="Email" required=""/>
                         </div>
                         <div>
-                            <input type="password" class="form-control" placeholder="Password" required="" />
+                            <input type="password" class="form-control" placeholder="Password" required=""/>
                         </div>
                         <div>
                             <a class="btn btn-default submit" href="index.html">Submit</a>
@@ -88,7 +90,7 @@
                             </p>
 
                             <div class="clearfix"></div>
-                            <br />
+                            <br/>
 
                             <div>
                                 <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>

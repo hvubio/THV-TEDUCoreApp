@@ -7,9 +7,9 @@
         $("#btnLogin").on("click",
             function(e) {
                 e.preventDefault();
-                var userName = $("#txtUserName").val();
+                var user = $("#txtUserName").val();
                 var password = $("#txtPassword").val();
-                login(userName, password);
+                login(user, password);
             });
     };
 
@@ -21,9 +21,9 @@
                 Password: pass
             },
             datatype: "json",
-            url: "admin/login/authen",
+            url: 'login/authen',
             success: function(res) {
-                if (res.Seccess) {
+                if (res.Success) {
                     window.location.href = "/Admin/Home/Index";
                 } else {
                     tedu.notify("Đăng nhập không thành công", "error");
