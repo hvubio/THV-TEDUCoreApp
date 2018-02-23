@@ -4,7 +4,8 @@
   "dependencies": {
     "gentelella": "^1.4.0",
     "notifyjs": "^0.4.2",
-    "bootbox": "^4.4.0"
+    "bootbox": "^4.4.0",
+    "jquery-validation": "^1.17.0"
   }
   
 }

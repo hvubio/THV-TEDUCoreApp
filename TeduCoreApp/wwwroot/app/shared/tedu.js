@@ -17,7 +17,7 @@
                 // arrow size in pixels
                 arrowSize: 5,
                 // position defines the notification position though uses the defaults below
-                position: '...',
+                position: 'top left',
                 // default positions
                 elementPosition: 'bottom left',
                 globalPosition: 'top right',

@@ -111,7 +111,7 @@ namespace TeduCoreApp
                     "{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute(
                     name: "areas",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    template: "{area:exists}/{controller=Login}/{action=Index}/{id?}");
                 
             });
         }
