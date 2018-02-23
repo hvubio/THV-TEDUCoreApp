@@ -16,8 +16,8 @@
                 }
             },
             messages: {
-                username: "Bạn cần nhập dữ liệu",
-                password: "Bạn cần nhập dữ liệu"
+                username: "You must input data",
+                password: "You must input data"
             }
 
         });
@@ -45,7 +45,7 @@
                 if (res.Success) {
                     window.location.href = "/Admin/Home/Index";
                 } else {
-                    tedu.notify("Đăng nhập không thành công", "error");
+                    tedu.notify("Login false, Username or Password war wrong", "error");
                 }
             }
         });
