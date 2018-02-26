@@ -27,7 +27,7 @@ namespace TeduCoreApp.Helper
             {
                 new Claim("FullName", user.FullName),
                 new Claim("Email", user.Email),
-                new Claim("Avatar", user.Avatar),
+                new Claim("Avatar", user.Avatar==null?"":String.Empty),
                 new Claim("Role", string.Join(";",roles))
             });
 

@@ -14,6 +14,7 @@ using TeduCoreApp.Data.EF;
 using TeduCoreApp.Data.EF.Repositories;
 using TeduCoreApp.Data.Entities;
 using TeduCoreApp.Data.IRepositories;
+using TeduCoreApp.Helper;
 using TeduCoreApp.Services;
 using IConfigurationProvider = AutoMapper.IConfigurationProvider;
 
@@ -78,6 +79,8 @@ namespace TeduCoreApp
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<DbInitializer>();
+
+            services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, CustomClaimsPrincipalFactory>();
 
             services.AddMvc().AddJsonOptions(options =>
             {
