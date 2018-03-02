@@ -72,10 +72,15 @@ namespace TeduCoreApp
             services.AddScoped(sp =>
                 new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
 
-            // add services entites
+            // add Repository entites
 
             services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+            services.AddScoped<IFunctionRepository, FunctionRepository>();
+
+            // add Services
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
+            services.AddScoped<IFunctionService, FunctionService>();
+
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<DbInitializer>();
