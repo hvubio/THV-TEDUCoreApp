@@ -1,6 +1,4 @@
-@using Microsoft.AspNetCore.Identity
 @using TeduCoreApp.Extensions
-@using TeduCoreApp.Models
 
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
@@ -25,9 +23,7 @@
     </li>
     <li>
         <form action="/Admin/Account/Logout" method="post" id="logoutForm" class="navbar-right">
-           
-                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
-                
+             <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
         </form>
     </li>
 </ul>
