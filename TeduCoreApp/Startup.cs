@@ -75,10 +75,12 @@ namespace TeduCoreApp
             // add Repository entites
 
             services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IFunctionRepository, FunctionRepository>();
 
             // add Services
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IFunctionService, FunctionService>();
 
 

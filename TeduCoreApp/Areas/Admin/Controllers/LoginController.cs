@@ -9,7 +9,7 @@ using TeduCoreApp.Utilities.Dtos;
 
 namespace TeduCoreApp.Areas.Admin.Controllers
 {
-    [Area("Admin")]
+    [Area("Admin")]   
     public class LoginController : Controller
     {
         private readonly SignInManager<AppUser> _signInManager;

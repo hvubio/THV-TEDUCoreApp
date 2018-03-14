@@ -23,6 +23,7 @@
     <link href="~/lib/notifyjs/dist/styles/metro/notify-metro.css" rel="stylesheet" />
     <!-- Custom Theme Style -->
     <link href="~/lib/gentelella/build/css/custom.css" rel="stylesheet" />
+    @RenderSection("Style",required:false)
 </head>
 
 <body class="nav-md">
@@ -219,10 +220,13 @@
     <script src="~/lib/notifyjs/dist/styles/metro/notify-metro.js"></script>
     <!-- bootbox -->
     <script src="~/lib/bootbox/bootbox.js"></script>
+    <!-- mustache -->
+    <script src="~/lib/mustache/mustache.js"></script>
 
     <!-- tedujs -->
     <script src="~/app/shared/tedu.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src="~/lib/gentelella/build/js/custom.js"></script>
+<script src="~/lib/gentelella/build/js/custom.js"></script>
+@RenderSection("Script",required:false)
 </body>
 </html>
