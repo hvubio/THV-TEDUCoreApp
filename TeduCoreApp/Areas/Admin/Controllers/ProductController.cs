@@ -26,6 +26,13 @@ namespace TeduCoreApp.Areas.Admin.Controllers
             return new OkObjectResult(model);
         }
 
+        [HttpGet]
+        public IActionResult GetAllPaging(int? categoryId, string keyword, int page, int pageSize)
+        {
+            var model = _productService.GetAllPaging(categoryId,keyword, page, pageSize);
+            return new OkObjectResult(model);
+        }
+
         #endregion
     }
 }
