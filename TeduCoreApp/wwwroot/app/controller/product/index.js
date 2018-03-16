@@ -1,5 +1,6 @@
 ﻿var productController = function() {
     this.initialize = function() {
+        loadCategory();
         loadData();
         registerEvent();
     };
@@ -11,7 +12,40 @@
                 tedu.configs.pageIndex = 1;
                 loadData(true);
             });
+        $("#ddlCategorySearch").on('change',
+            function() {
+                loadData(true);
+            });
+        $('#btnSearch').on('click',
+            function() {
+                loadData(true);
+            });
+        $('#txtKeyword').keypress(function(e) {
+            if (e.keyCode === 13)
+                loadData(true);
+            });
     };
+    function loadCategory() {
+        var render = "<option> Select Category </option>";
+        $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            url: '/admin/product/getcategoryall',
+            success: function (response) {
+                $.each(response,
+                    function(i, item) {
+                        render += "<option value='" +item.Id + "'> "+ item.Name +"  </option>";
+                    });
+                if (render !== null) {
+                    $('#ddlCategorySearch').html(render);
+                }
+            },
+            error: function(status) {
+                console.log(status);
+                tedu.notify("Can not load product category", "error");
+            }
+        });
+    }
 
     function loadData(isPageChanged) {
         var template = $("#table-template").html();
@@ -19,7 +53,7 @@
         $.ajax({
             type: "GET",
             data: {
-                categoryId: null,
+                categoryId: $('#ddlCategorySearch').val(),
                 keyword: $('#txtKeyword').val(),
                 page: tedu.configs.pageIndex,
                 pageSize: tedu.configs.pageSize
@@ -28,6 +62,11 @@
             url: "/admin/product/getallpaging",
             success: function(response) {
                 console.log(response);
+                if (response.RowCount === 0) {
+                    tedu.notify("Can not found data", "error");
+                    $('#paginationUL').empty();
+                    $('#tbl-content').html(" ");
+                }
                 $.each(response.Results,
                     function(i, item) {
                         render += Mustache.render(template,
@@ -44,6 +83,7 @@
                         if (render !== "") {
                             $("#tbl-content").html(render);
                         }
+                        
                         wrapPaging(response.RowCount, function() {
                             loadData();
                         }, isPageChanged);

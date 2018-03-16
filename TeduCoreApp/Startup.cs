@@ -15,6 +15,7 @@ using TeduCoreApp.Data.EF.Repositories;
 using TeduCoreApp.Data.Entities;
 using TeduCoreApp.Data.IRepositories;
 using TeduCoreApp.Helper;
+using TeduCoreApp.Infrastructure.Interfaces;
 using TeduCoreApp.Services;
 using IConfigurationProvider = AutoMapper.IConfigurationProvider;
 
@@ -73,12 +74,13 @@ namespace TeduCoreApp
                 new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
 
             // add Repository entites
-
+            services.AddScoped(typeof(IUnitOfWork), typeof(EfUnitOfWork));
             services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IFunctionRepository, FunctionRepository>();
 
             // add Services
+            services.AddScoped(typeof(IRepository<,>),typeof(EfRepository<,>));
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IFunctionService, FunctionService>();
