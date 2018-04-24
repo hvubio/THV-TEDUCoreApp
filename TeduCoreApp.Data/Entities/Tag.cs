@@ -13,7 +13,6 @@ namespace TeduCoreApp.Data.Entities
         public string Name { get; set; }
         [StringLength(50)]
         public string Type { get; set; }
-
-        public ICollection<BlogTag> BlogTags { get; set; }
+        
     }
 }

@@ -9,6 +9,7 @@ namespace TeduCoreApp.Application.ViewModels.Product
 {
     public class ProductViewModel
     {
+        public int Id { get; set; }
         [StringLength(255)] [Required] public string Name { get; set; }
 
 

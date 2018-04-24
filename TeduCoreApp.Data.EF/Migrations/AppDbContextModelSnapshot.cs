@@ -735,7 +735,7 @@ namespace TeduCoreApp.Data.EF.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Procduct");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("TeduCoreApp.Data.Entities.ProductCategory", b =>
@@ -850,9 +850,8 @@ namespace TeduCoreApp.Data.EF.Migrations
 
             modelBuilder.Entity("TeduCoreApp.Data.Entities.ProductTag", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("varchar(255)")
                         .HasMaxLength(255);
 
                     b.Property<int>("ProductId");
@@ -1040,7 +1039,7 @@ namespace TeduCoreApp.Data.EF.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TeduCoreApp.Data.Entities.Tag", "Tag")
-                        .WithMany("BlogTags")
+                        .WithMany()
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -1108,7 +1107,7 @@ namespace TeduCoreApp.Data.EF.Migrations
             modelBuilder.Entity("TeduCoreApp.Data.Entities.ProductTag", b =>
                 {
                     b.HasOne("TeduCoreApp.Data.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("ProductTags")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
 

@@ -5,7 +5,8 @@
         registerEvent();
     };
 
-    function registerEvent(){
+    function registerEvent() {
+        
         $('#ddlShowPage').on('change',
             function() {
                 tedu.configs.pageSize = $(this).val();
@@ -23,6 +24,155 @@
         $('#txtKeyword').keypress(function(e) {
             if (e.keyCode === 13)
                 loadData(true);
+        });
+
+        $('#btnCreate').on('click',
+            function () {
+                intTreeDropDownCategory();
+                resetFormMaintainance();
+                $('#modal-add-edit').modal('show');
+            });
+        $('body').on('click',
+            '#btnSave',
+            function(e) {
+                var id = $('#hidIdM').val();
+                var name = $('#txtNameM').val();
+                var description = $('#txtDescM').val();
+                var categoryId = $('#ddlCategoryIdM').combotree('getValue');
+                var unit = $('#txtUnitM').val();
+                var price = $('#txtPriceM').val();
+                var originalPrice = $('#txtOriginalPriceM').val();
+                var promotionPrice = $('#txtPromotionPriceM').val();
+                var seoTitle = $('#txtSeoPageTitleM').val();
+                var seoUrl = $('#txtSeoAliasM').val();
+                var seoKeyword = $('#txtSeoKeywordM').val();
+                var seoDescription = $('#txtSeoDescriptionM').val();
+                var tags = $('#txtTagM').val();
+                var active = $('#ckStatusM').prop('checked') === true ? 1 : 0;
+                var homeShow = $('#ckShowHomeM').prop('checked');
+                var hotFlag = $('#ckHotM').prop('checked');
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '/Admin/Product/SaveEntity',
+                    data: {
+                        Id: id,
+                        Name: name,
+                        Price: price,
+                        PromotionPrice: promotionPrice,
+                        OriginalPrice: originalPrice,
+                        Description: description,
+                        Unit: unit,
+                        SeoPageTitle: seoTitle,
+                        SeoKeywords: seoKeyword,
+                        SeoDescription: seoDescription,
+                        SeoAlias: seoUrl,
+                        Tag: tags,
+                        Image: 'adfsadf',
+                        Content: 'asdfasdf',
+                        CategoryId: categoryId,
+                        Status: active,
+                        HomeFlag: homeShow,
+                        HotFlag: hotFlag
+                    },
+                    beforeLoading: function() {
+                        tedu.startLoading();
+                    },
+                    success: function(response) {
+                        tedu.notify('Success create new product','success');
+                        tedu.stopLoading();
+                        $('#modal-add-edit').modal('hide');
+
+                        resetFormMaintainance();
+                        loadData();
+                    },
+                    error: function(status) {
+                        console.log(status);
+                        tedu.notify('Error process make new product', 'error');
+                    }
+                });
+            });
+
+        $('body').on('click',
+            '.btn-edit',
+            function(e) {
+                e.preventDefault();
+                var that = $(this).data('id');
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        id: that
+                    },
+                    url: '/Admin/Product/GetById',
+                    beforeSend: function() {
+                        tedu.startLoading();
+                    },
+                    success: function(response) {
+                        var data = response;
+                        $('#hidIdM').val(data.Id);
+                        $('#txtNameM').val(data.Name);
+                        intTreeDropDownCategory(data.CategoryId);
+
+                        $('#txtDescM').val(data.Description);
+                        $('#txtUnitM').val(data.Unit);
+
+                        $('#txtPriceM').val(data.Price);
+                        $('#txtOriginalPriceM').val(data.OriginalPrice);
+                        $('#txtPromotionPriceM').val(data.PromotionPrice);
+
+                        // $('#txtImageM').val(data.ThumbnailImage);
+
+                        $('#txtTagM').val(data.Tag);
+                        $('#txtMetakeywordM').val(data.SeoKeywords);
+                        $('#txtMetaDescriptionM').val(data.SeoDescription);
+                        $('#txtSeoPageTitleM').val(data.SeoPageTitle);
+                        $('#txtSeoAliasM').val(data.SeoAlias);
+
+                        //CKEDITOR.instances.txtContentM.setData(data.Content);
+                        $('#ckStatusM').prop('checked', data.Status == 1);
+                        $('#ckHotM').prop('checked', data.HotFlag);
+                        $('#ckShowHomeM').prop('checked', data.HomeFlag);
+
+                        $('#modal-add-edit').modal('show');
+                        tedu.stopLoading();
+                    },
+                    error(status) {
+                        console.log(status);
+                        tedu.notify('Error process load data', 'error');
+                        tedu.stopLoading();
+                    }
+                });
+            });
+
+        $('body').on('click',
+            '.btn-delete',
+            function(e) {
+                var that = $(this).data('id');
+                tedu.confirm('Are you sure delete product',
+                    function() {
+                        $.ajax({
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                id: that
+                            },
+                            url: '/Admin/Product/Delete',
+                            beforeSend: function () {
+                                tedu.startLoading();
+                            },
+                            success: function (response) {
+                                tedu.stopLoading();
+                                tedu.notify('Delete success data', 'success');
+                                loadData();
+                            },
+                            error: function (status) {
+                                console.log(status);
+                                tedu.notify('Can not delete process error', 'error')
+                            }
+                        });
+                    });
             });
     };
     function loadCategory() {
@@ -121,5 +271,64 @@
                 setTimeout(callBack(), 200);
             }
         });
+    }
+
+    function intTreeDropDownCategory(selectId) {
+        $.ajax({
+            url: '/Admin/ProductCategory/GetCategoryAll',
+            dataType: 'json',
+            type: 'GET',
+            async: false,
+            success: function (response) {
+                var data = [];
+                $.each(response,
+                    function (i, item) {
+                        data.push({
+                            id: item.Id,
+                            text: item.Name,
+                            parentId: item.ParentId,
+                            sortOrder: item.SortOrder
+                        });
+                    });
+                var arr = tedu.unflattern(data);
+                $('#ddlCategoryIdM').combotree({
+                    data: arr
+                });
+                if (selectId != undefined) {
+                    $('#ddlCategoryIdM').combotree('setValue', selectId);
+                }
+            },
+            error: function (status) {
+                console.log(status);
+                tedu.notify("Can not load data to dropdown tree", 'error');
+            }
+        });
+    }
+
+    function resetFormMaintainance() {
+        $('#hidIdM').val(0);
+        $('#txtNameM').val('');
+        intTreeDropDownCategory(' ');
+
+        $('#txtDescM').val('');
+        $('#txtUnitM').val('');
+
+        $('#txtPriceM').val('0');
+        $('#txtOriginalPriceM').val('');
+        $('#txtPromotionPriceM').val('');
+
+        //$('#txtImageM').val('');
+
+        $('#txtTagM').val('');
+        $('#txtMetakeywordM').val('');
+        $('#txtMetaDescriptionM').val('');
+        $('#txtSeoPageTitleM').val('');
+        $('#txtSeoAliasM').val('');
+
+        //CKEDITOR.instances.txtContentM.setData('');
+        $('#ckStatusM').prop('checked', true);
+        $('#ckHotM').prop('checked', false);
+        $('#ckShowHomeM').prop('checked', false);
+
     }
 }

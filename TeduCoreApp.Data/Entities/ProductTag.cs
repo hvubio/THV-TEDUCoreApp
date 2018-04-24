@@ -5,16 +5,16 @@ using TeduCoreApp.Infrastructure.ShareKernel;
 namespace TeduCoreApp.Data.Entities
 {
     [Table("ProductTag")]
-    public class ProductTag: DomainEntity<string>
+    public class ProductTag : DomainEntity<int>
     {
         public int ProductId { get; set; }
-        [Required] [Column(TypeName = "varchar(50)")]
+
+        [Required]
+        [Column(TypeName = "varchar(50)")]
         public string TagId { get; set; }
 
-        [ForeignKey("ProductId")]
-        public Product Product { get; set; }
-        [ForeignKey("TagId")]
-        public Tag Tag { get; set; }
+        [ForeignKey("ProductId")] public Product Product { get; set; }
 
+        [ForeignKey("TagId")] public Tag Tag { get; set; }
     }
 }

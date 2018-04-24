@@ -9,12 +9,40 @@ using TeduCoreApp.Infrastructure.ShareKernel;
 
 namespace TeduCoreApp.Data.Entities
 {
-    [Table("Procduct")]
+    [Table("Product")]
     public class Product : DomainEntity<int>, IHasSeoMetaData, ISwitchable, IDateTracking
     {
-        [StringLength(255)] [Required] public string Name { get; set; }
+        public Product(string name, string image, decimal price, decimal? promotionPrice, decimal? originalPrice, string description, string content,
+            bool? homeFlag, bool newFlag, bool hotFlag, int? viewCount, string tags, string unit, string seoPageTitle, string seoAlias, 
+            string seoKeywords, string seoDescription, Status status, int categoryId)
+        {
+            Name = name;
+            Image = image;
+            Price = price;
+            PromotionPrice = promotionPrice;
+            OriginalPrice = originalPrice;
+            Description = description;
+            Content = content;
+            CategoryId = CategoryId;
+            HomeFlag = homeFlag;
+            NewFlag = newFlag;
+            HotFlag = hotFlag;
+            ViewCount = viewCount;
+            Tag = tags;
+            Unit = unit;
+            SeoPageTitle = seoPageTitle;
+            SeoAlias = seoAlias;
+            SeoKeywords = seoKeywords;
+            SeoDescription = seoDescription;
+            Status = status;
+            ProductTags = new List<ProductTag>();
+        }
 
-        
+        public Product()
+        {
+        }
+
+        [StringLength(255)] [Required] public string Name { get; set; }
 
         [StringLength(255)] [Required] public string Image { get; set; }
 
@@ -39,7 +67,9 @@ namespace TeduCoreApp.Data.Entities
         //link Foreign key
         [ForeignKey("CategoryId")] public virtual ProductCategory ProductCategory { get; set; }
 
-        public ICollection<ProductColor> ProductColors { get; set; }
+        public virtual ICollection<ProductColor> ProductColors { get; set; }
+
+        public virtual ICollection<ProductTag> ProductTags { get; set; }
 
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }

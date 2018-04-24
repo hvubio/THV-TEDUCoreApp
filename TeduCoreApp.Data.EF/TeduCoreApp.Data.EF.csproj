@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180423090515_changeProductTagIdType.cs" />
+    <Compile Remove="Migrations\20180424022152_ChangeProductTagIdType.cs" />
+    <Compile Remove="Migrations\20180424030028_MakeProductTag2.cs" />
+    <Compile Remove="Migrations\20180424030405_MakeProductTag2.cs" />
+    <Compile Remove="Migrations\20180424030812_makenewProductTag2.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />

@@ -77,6 +77,8 @@ namespace TeduCoreApp
             services.AddScoped(typeof(IUnitOfWork), typeof(EfUnitOfWork));
             services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductTagRepository, ProductTagRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IFunctionRepository, FunctionRepository>();
 
             // add Services
