@@ -62,9 +62,9 @@
         if (datetime == null || datetime === "") {
             return "";
         }
-        var newdate = new Date(parseInt(datetime.substr(6)));
+        var newdate = new Date(datetime.substr(0,10));
         var month = newdate.getMonth() + 1;
-        var day = newdate.getDay();
+        var day = newdate.getDate();
         var year = newdate.getFullYear();
         var hh = newdate.getHours();
         var mm = newdate.getMinutes();
@@ -83,9 +83,9 @@
         if (datetime == null || datetime === "") {
             return "";
         }
-        var newdate = new Date(parseInt(datetime.substr(6)));
+        var newdate = new Date(datetime.substr(0,19));
         var month = newdate.getMonth() + 1;
-        var day = newdate.getDay();
+        var day = newdate.getDate();
         var year = newdate.getFullYear();
         var hh = newdate.getHours();
         var mm = newdate.getMinutes();

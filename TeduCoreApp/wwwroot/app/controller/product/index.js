@@ -3,10 +3,44 @@
         loadCategory();
         loadData();
         registerEvent();
+        registerControls();
     };
 
     function registerEvent() {
-        
+        $('#frmMaintainance').validate({
+            errorClass: 'red',
+            ignore: [],
+            debug: false,
+            lang: 'en',
+            rules: {
+                txtNameM: {required: true},
+                txtPriceM: {
+                    number: true
+                },
+                txtPromotionPriceM: {
+                    number: true
+                },
+                txtOriginalPriceM: {
+                    number: true
+                },
+                //ddlCategoryIdM: {
+                //    required: true
+                //},
+                txtContentM: {
+                    required: function() {
+                        CKEDITOR.instances.txtContentM.updateElement();
+                    },
+                    minlength: 10
+                }
+            },
+            messages: {
+                txtContentM: {
+                    required:'Content can not empty',
+                    minlength: 'Input minimun 100 character'
+                }
+            }
+        });
+       
         $('#ddlShowPage').on('change',
             function() {
                 tedu.configs.pageSize = $(this).val();
@@ -30,68 +64,88 @@
             function () {
                 intTreeDropDownCategory();
                 resetFormMaintainance();
+                
+                // check combotree is required 
+                $('#ddlCategoryIdM').combotree({
+                    validateOnCreate: false,
+                    required: true,
+                    missingMessage:'Please choose the category',
+                    prompt:'Choose a category'
+                });
+
                 $('#modal-add-edit').modal('show');
             });
+        $('#btnCancel').on('click', function() {
+            $('#frmMaintainance').validate().resetForm();
+        });
+
         $('body').on('click',
             '#btnSave',
             function(e) {
-                var id = $('#hidIdM').val();
-                var name = $('#txtNameM').val();
-                var description = $('#txtDescM').val();
-                var categoryId = $('#ddlCategoryIdM').combotree('getValue');
-                var unit = $('#txtUnitM').val();
-                var price = $('#txtPriceM').val();
-                var originalPrice = $('#txtOriginalPriceM').val();
-                var promotionPrice = $('#txtPromotionPriceM').val();
-                var seoTitle = $('#txtSeoPageTitleM').val();
-                var seoUrl = $('#txtSeoAliasM').val();
-                var seoKeyword = $('#txtSeoKeywordM').val();
-                var seoDescription = $('#txtSeoDescriptionM').val();
-                var tags = $('#txtTagM').val();
-                var active = $('#ckStatusM').prop('checked') === true ? 1 : 0;
-                var homeShow = $('#ckShowHomeM').prop('checked');
-                var hotFlag = $('#ckHotM').prop('checked');
+                if ($('#frmMaintainance').valid() && $('#ddlCategoryIdM').combotree('isValid')) {
 
-                $.ajax({
-                    type: 'POST',
-                    dataType: 'json',
-                    url: '/Admin/Product/SaveEntity',
-                    data: {
-                        Id: id,
-                        Name: name,
-                        Price: price,
-                        PromotionPrice: promotionPrice,
-                        OriginalPrice: originalPrice,
-                        Description: description,
-                        Unit: unit,
-                        SeoPageTitle: seoTitle,
-                        SeoKeywords: seoKeyword,
-                        SeoDescription: seoDescription,
-                        SeoAlias: seoUrl,
-                        Tag: tags,
-                        Image: 'adfsadf',
-                        Content: 'asdfasdf',
-                        CategoryId: categoryId,
-                        Status: active,
-                        HomeFlag: homeShow,
-                        HotFlag: hotFlag
-                    },
-                    beforeLoading: function() {
-                        tedu.startLoading();
-                    },
-                    success: function(response) {
-                        tedu.notify('Success create new product','success');
-                        tedu.stopLoading();
-                        $('#modal-add-edit').modal('hide');
+                    var id = $('#hidIdM').val();
+                    var name = $('#txtNameM').val();
+                    var description = $('#txtDescM').val();
+                    var categoryId = $('#ddlCategoryIdM').combotree('getValue');
+                    var unit = $('#txtUnitM').val();
+                    var price = $('#txtPriceM').val();
+                    var originalPrice = $('#txtOriginalPriceM').val();
+                    var promotionPrice = $('#txtPromotionPriceM').val();
+                    var content = CKEDITOR.instances.txtContentM.getData();
+                    var seoTitle = $('#txtSeoPageTitleM').val();
+                    var seoUrl = $('#txtSeoAliasM').val();
+                    var seoKeyword = $('#txtSeoKeywordM').val();
+                    var seoDescription = $('#txtSeoDescriptionM').val();
+                    var tags = $('#txtTagM').val();
+                    var active = $('#ckStatusM').prop('checked') === true ? 1 : 0;
+                    var homeShow = $('#ckShowHomeM').prop('checked');
+                    var hotFlag = $('#ckHotM').prop('checked');
 
-                        resetFormMaintainance();
-                        loadData();
-                    },
-                    error: function(status) {
-                        console.log(status);
-                        tedu.notify('Error process make new product', 'error');
-                    }
-                });
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: '/Admin/Product/SaveEntity',
+                        data: {
+                            Id: id,
+                            Name: name,
+                            Price: price,
+                            PromotionPrice: promotionPrice,
+                            OriginalPrice: originalPrice,
+                            Description: description,
+                            Unit: unit,
+                            SeoPageTitle: seoTitle,
+                            SeoKeywords: seoKeyword,
+                            SeoDescription: seoDescription,
+                            SeoAlias: seoUrl,
+                            Tag: tags,
+                            Image: 'adfsadf',
+                            Content: content,
+                            CategoryId: categoryId,
+                            Status: active,
+                            HomeFlag: homeShow,
+                            HotFlag: hotFlag
+                        },
+                        beforeLoading: function() {
+                            tedu.startLoading();
+                        },
+                        success: function(response) {
+                            tedu.notify('Success create new product', 'success');
+                            tedu.stopLoading();
+                            $('#modal-add-edit').modal('hide');
+
+                            resetFormMaintainance();
+                            loadData(true);
+                        },
+                        error: function(status) {
+                            console.log(status);
+                            tedu.notify('Error process make Save product', 'error');
+                        }
+
+
+                    });
+                }
+                return false;
             });
 
         $('body').on('click',
@@ -130,8 +184,8 @@
                         $('#txtSeoPageTitleM').val(data.SeoPageTitle);
                         $('#txtSeoAliasM').val(data.SeoAlias);
 
-                        //CKEDITOR.instances.txtContentM.setData(data.Content);
-                        $('#ckStatusM').prop('checked', data.Status == 1);
+                        CKEDITOR.instances.txtContentM.setData(data.Content);
+                        $('#ckStatusM').prop('checked', data.Status === 1);
                         $('#ckHotM').prop('checked', data.HotFlag);
                         $('#ckShowHomeM').prop('checked', data.HomeFlag);
 
@@ -165,15 +219,34 @@
                             success: function (response) {
                                 tedu.stopLoading();
                                 tedu.notify('Delete success data', 'success');
-                                loadData();
+                                loadData(true);
                             },
                             error: function (status) {
                                 console.log(status);
-                                tedu.notify('Can not delete process error', 'error')
+                                tedu.notify('Can not delete process error', 'error');
                             }
                         });
                     });
             });
+    };
+    function registerControls() {
+        CKEDITOR.replace('txtContentM', {});
+
+        //Fix: cannot click on element ck in modal
+        $.fn.modal.Constructor.prototype.enforceFocus = function () {
+            $(document)
+                .off('focusin.bs.modal') // guard against infinite focus loop
+                .on('focusin.bs.modal', $.proxy(function (e) {
+                    if (
+                        this.$element[0] !== e.target && !this.$element.has(e.target).length
+                            // CKEditor compatibility fix start.
+                            && !$(e.target).closest('.cke_dialog, .cke').length
+                        // CKEditor compatibility fix end.
+                    ) {
+                        this.$element.trigger('focus');
+                    }
+                }, this));
+        };
     };
     function loadCategory() {
         var render = "<option> Select Category </option>";
@@ -240,13 +313,13 @@
                 wrapPaging(response.RowCount, function () {
                     loadData();
                 }, isPageChanged);
-
             },
             error: function(status) {
                 console.log(status);
                 tedu.notify("Cannot load product data", "error");
             }
         });
+        
     };
 
     function wrapPaging(recordCount, callBack, changePageSize) {
@@ -325,7 +398,7 @@
         $('#txtSeoPageTitleM').val('');
         $('#txtSeoAliasM').val('');
 
-        //CKEDITOR.instances.txtContentM.setData('');
+        CKEDITOR.instances.txtContentM.setData('');
         $('#ckStatusM').prop('checked', true);
         $('#ckHotM').prop('checked', false);
         $('#ckShowHomeM').prop('checked', false);
