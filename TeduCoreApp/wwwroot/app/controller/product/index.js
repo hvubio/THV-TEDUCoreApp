@@ -60,6 +60,35 @@
                 loadData(true);
         });
 
+        $('#btnSelectImg').on('click',
+            function() {
+                $('#fileInputImage').click();
+            });
+
+        $('#fileInputImage').on('change',
+            function() {
+                var fileUpload = $(this).get(0);
+                var files = fileUpload.files;
+                var data = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    data.append(files[i].name, files[i]);
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/Upload/UploadImage',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function(path) {
+                        $('#txtImageM').val(path);
+                        tedu.notify('Upload Image Success', 'success');
+                    },
+                    error: function() {
+                        tedu.notify('Error Upload Image', 'error');
+                    }
+                });
+            });
+
         $('#btnCreate').on('click',
             function () {
                 intTreeDropDownCategory();
