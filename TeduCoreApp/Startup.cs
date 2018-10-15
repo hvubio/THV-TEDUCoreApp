@@ -80,12 +80,16 @@ namespace TeduCoreApp
             services.AddScoped<IProductTagRepository, ProductTagRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IFunctionRepository, FunctionRepository>();
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
+
 
             // add Services
             services.AddScoped(typeof(IRepository<,>),typeof(EfRepository<,>));
             services.AddScoped<IProductCategoryService, ProductCategoryService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IFunctionService, FunctionService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
 
 
             services.AddTransient<IEmailSender, EmailSender>();

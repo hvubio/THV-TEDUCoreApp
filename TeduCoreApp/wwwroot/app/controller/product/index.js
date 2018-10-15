@@ -326,7 +326,7 @@
                                 Id: item.Id,
                                 Name: item.Name,
                                 CategoryName: item.ProductCategory.Name,
-                                Image: item.Image == null ? '<img src="/lib/gentelella/production/images/user.png" width=25 />' : '<img src="'+ item.Image +'"width=25 />',
+                                Image: item.Image === null ? '<img src="/lib/gentelella/production/images/user.png" width=25 />' : '<img src="'+ item.Image +'"width=25 />',
                                 Price: tedu.formatNumber(item.Price, 0),
                                 CreatedDate: tedu.dateTimeFormatJson(item.DateCreated),
                                 Status: tedu.getStatus(item.Status)
@@ -396,7 +396,7 @@
                 $('#ddlCategoryIdM').combotree({
                     data: arr
                 });
-                if (selectId != undefined) {
+                if (selectId !== undefined) {
                     $('#ddlCategoryIdM').combotree('setValue', selectId);
                 }
             },
