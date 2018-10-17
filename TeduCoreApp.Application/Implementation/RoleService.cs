@@ -71,7 +71,6 @@ namespace TeduCoreApp.Application.Implementation
             var paginationSet = new PagedResult<AppRoleViewModel>()
             {
                 CurrentPage = page,
-                PageCount = totalRow/pageSize,
                 PageSize = pageSize,
                 Results = data,
                 RowCount = totalRow
