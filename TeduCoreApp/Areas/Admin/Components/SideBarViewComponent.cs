@@ -27,7 +27,7 @@ namespace TeduCoreApp.Areas.Admin.Components
 
             if (roles.Split(";").Contains(CommonConstants.AdminRole))
             {
-                functionViewModels = await _functionService.GetAll();
+                functionViewModels = await _functionService.GetAll(string.Empty);
             }
             else
             {

@@ -1,7 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Role list";
 }
+
 @section Script{
+    <script src="~/lib/jquery-treegrid/js/jquery.treegrid.js"></script>
     <script src="~/app/controller/role/index.js" asp-append-version="true"></script>
 
     <script>
@@ -9,6 +11,11 @@
         roleObj.initialize();
     </script>
 }
+@section Style{
+
+    <link href="~/lib/jquery-treegrid/css/jquery.treegrid.css" rel="stylesheet" />
+}
+
 <div class="">
     <div class="page-title">
         <div class="title_left">
@@ -17,13 +24,13 @@
 
         <div class="title_right">
             <div class="col-md-2 col-sm-2 col-xs-12 form-group pull-right top_search">
-                <button class="btn btn-success" id="btn-create" type="button">Create</button>
+                <button class="btn btn-success" id="btn-create" type="button"><i class="fa fa-plus"></i> Create</button>
             </div>
             <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                 <div class="input-group">
                     <input type="text" id="txt-search-keyword" class="form-control" placeholder="Search...">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" id="btn-search" type="button">Search!</button>
+                        <button class="btn btn-default" id="btn-search" type="button"><i class="fa fa-search"></i></button>
                     </span>
                 </div>
 
@@ -81,10 +88,13 @@
             <td>{{Name}}</td>
             <td>{{Description}}</td>
             <td>
+                <a href="#" data-id="{{Id}}" class="btn  btn-xs  btn-primary btn-dark"><i class="fa fa-eye-slash"></i></a>
                 <a href="#" data-id="{{Id}}" class="btn  btn-xs btn-info btn-edit"><i class="fa fa-pencil-square-o"></i></a>
                 <a href="#" data-id="{{Id}}" class="btn btn-xs  btn-danger btn-delete"><i class="fa fa-trash-o"></i></a>
+                <a href="#" data-id="{{Id}}" class="btn btn-"
             </td>
         </tr>
     </script>
 </div>
 @Html.Partial("_AddEditModal.cshtml")
+@Html.Partial("_AssignPermission.cshtml")

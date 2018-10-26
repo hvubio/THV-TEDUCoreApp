@@ -123,12 +123,13 @@ namespace TeduCoreApp.Application.Implementation
             if (oldPermission.Count > 0)
             {
                 _permissionRepository.RemoveMultiple(oldPermission);
-
-                foreach (var p in permissions)
-                {
-                    _permissionRepository.Add(p);
-                }
             }
+
+            foreach (var p in permissions)
+            {
+                _permissionRepository.Add(p);
+            }
+
             _unitOfWork.Commit();           
 
         }

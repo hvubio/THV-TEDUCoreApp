@@ -78,8 +78,8 @@ namespace TeduCoreApp.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult ListAllFunction(Guid roleId)
         {
-            var function = _roleService.GetListFunctionWithRole(roleId);
-            return new OkObjectResult(function);
+            var functions = _roleService.GetListFunctionWithRole(roleId);
+            return new OkObjectResult(functions);
         }
 
         [HttpPost]
